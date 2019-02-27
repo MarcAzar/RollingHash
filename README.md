@@ -30,7 +30,7 @@ assert trueAnswer == hf.hashValue
 ## Installation
 Install <a class="external reference" href="https://nim-lang.org/install.html">Nim</a> for Windows or Unix by following the instructions in , or preferably by installing <a class="reference external" href="https://github.com/dom96/choosenim">choosenim</a>
 
-Once ```choosenim``` is installed you can ```nimble install bipbuffer``` to pull the latest bipbuffer release and all its dependencies
+Once ```choosenim``` is installed you can ```nimble install cyclichash``` to pull the latest bipbuffer release and all its dependencies
 
 ## Documentation
 Refer to the following documentation for a list of procedures and templates:
