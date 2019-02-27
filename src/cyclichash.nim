@@ -8,8 +8,7 @@
 ## regarding Cyclic Polynomial hasing please refer to wiki's article on
 ## `Rolling Hash`_
 ##
-## .. _Rolling Hash:
-## https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial
+## .. _Rolling Hash:https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial
 ##
 import characterhash
 
