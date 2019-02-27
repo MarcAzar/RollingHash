@@ -42,7 +42,7 @@ proc hasher*[HashType, CharType](maxVal: HashType) : CharacterHash[HashType, Cha
   else:
     raise newException(IOError, "unsupported hash value type")
 
-proc hasher*[HashType, CharType](maxVal: int, seedOne, seedTwo: int): CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
+proc hasher*[HashType, CharType](maxVal: HashType, seedOne, seedTwo: int): CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
   let numberOfChars = 1 shl (CharType.sizeof * 8)
   result.hashValues = newSeq[HashType](numberOfChars)
   

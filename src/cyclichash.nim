@@ -5,8 +5,8 @@
 ##
 ## A Cyclic Polynomial hash is a type of Rolling hash which avoids
 ## multiplication by using circular shifts and xoring. For more information
-## regarding Cyclic Polynomial hasing please refer to wiki's article on `Rolling
-## Hash`_
+## regarding Cyclic Polynomial hasing please refer to wiki's article on
+## `Rolling Hash`_
 ##
 ## .. _Rolling Hash:
 ## https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial
@@ -82,12 +82,12 @@ proc update*[HashType, CharType](y: var CyclicHash[HashType, CharType], outChar:
 
 proc reverseUpdate*[HashType, CharType](y: var CyclicHash[HashType, CharType], outChar: CharType, inChar: CharType) {.inline.}=
   var z: HashType = y.hasher.hashValues[ord(outChar)]
-  fastLeftShiftN[HashType](z, y)
+  y.fastLeftShiftN(z)
   y.hashValue = y.hashValue xor z xor y.hasher.hashValues[ord(inChar)]
   y.hashValue = getFastRightShiftOne[HashType](y.hashValue, y)
 
 proc eat*[HashType, CharType](y: var CyclicHash[HashType, CharType], inChar: CharType) =
-  fastLeftShiftOne[HashType](y, y.hashValue)
+  y.fastLeftShiftOne(y.hashValue)
   y.hashValue = y.hashValue xor y.hasher.hashValues[ord(inChar)]
 
 proc hashPrepend*[HashType, CharType](y: var CyclicHash[HashType, CharType], x: CharType): HashType {.inline.}=
