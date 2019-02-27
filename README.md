@@ -1,6 +1,6 @@
 # Cyclic-Polynomial-Hash
 A Nim implementation of a Cyclic Polynomial Hash, aka BuzHash. A Cyclic Polynomial hash is a type of Rolling hash which avoids
-multiplication by using circular shifts and xoring. For more information regarding Cyclic Polynomial hasing please refer to wiki's article on <a class="external reference" href=https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial>Rolling Hash</a>
+multiplication by using circular shifts and xoring. For more information regarding Cyclic Polynomial hashing please refer to wiki's article on <a class="external reference" href=https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial>Rolling Hash</a>
 
 ## Example Usage
 ```
