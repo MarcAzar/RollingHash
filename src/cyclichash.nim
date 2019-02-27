@@ -84,7 +84,7 @@ proc reverseUpdate*[HashType, CharType](y: var CyclicHash[HashType, CharType], o
   var z: HashType = y.hasher.hashValues[ord(outChar)]
   y.fastLeftShiftN(z)
   y.hashValue = y.hashValue xor z xor y.hasher.hashValues[ord(inChar)]
-  y.hashValue = getFastRightShiftOne[HashType](y.hashValue, y)
+  y.hashValue = y.getFastRightShiftOne(y.hashValue)
 
 proc eat*[HashType, CharType](y: var CyclicHash[HashType, CharType], inChar: CharType) =
   y.fastLeftShiftOne(y.hashValue)
