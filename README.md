@@ -1,6 +1,6 @@
 # Cyclic-Polynomial-Hash
 A Nim implementation of a Cyclic Polynomial Hash, aka BuzHash. A Cyclic Polynomial hash is a type of Rolling hash which avoids
-multiplication by using circular shifts and xoring. For more information regarding Cyclic Polynomial hashing please refer to wiki's article on <a class="external reference" href=https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial>Rolling Hash</a>
+multiplication by using circular shifts and xoring. For more information regarding Cyclic Polynomial hashing please refer to wiki's article on <a class="external reference" href="https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial">Rolling Hash</a>
 
 ## Example Usage
 ```
@@ -34,7 +34,7 @@ Once ```choosenim``` is installed you can ```nimble install cyclic-polynomial-ha
 
 ## Documentation
 Refer to the following documentation for a list of procedures and templates:
-<a class="reference" href="docs/cyclichash.html/">Cyclic Hash</a> and <a class="reference" href="docs/characterhash.html/">Character Hash</a>
+<a href="docs/cyclichash.html/">Cyclic Hash</a> and <a href="docs/characterhash.html/">Character Hash</a>
 
 ## Credits
 Special thanks for Dr. Daniel Lemire for his help and for replying to my inquires concerning his implementation of cyclic hash in c++ found <a class="reference external" href="https://github.com/lemire/rollinghashcpp">here</a> along with other handy rolling hash functions! 
