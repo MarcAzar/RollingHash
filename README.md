@@ -34,7 +34,7 @@ Once ```choosenim``` is installed you can ```nimble install cyclic-polynomial-ha
 
 ## Documentation
 Refer to the following documentation for a list of procedures and templates:
-<a href="docs/cyclichash.html/">Cyclic Hash</a> and <a href="docs/characterhash.html/">Character Hash</a>
+<a class="reference" href="docs/cyclichash.html">Cyclic Hash</a> and <a class="reference" href="docs/characterhash.html">Character Hash</a>
 
 ## Credits
 Special thanks for Dr. Daniel Lemire for his help and for replying to my inquires concerning his implementation of cyclic hash in c++ found <a class="reference external" href="https://github.com/lemire/rollinghashcpp">here</a> along with other handy rolling hash functions! 
