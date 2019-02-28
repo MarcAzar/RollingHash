@@ -15,12 +15,18 @@ type
     hashValues*: seq[HashType]
 
 proc maskFnc*[HashType](bits: int): HashType {.inline.} =
+  ## Return a mask of ones equal to `bits` (eg: 4 bit mask = 0b1111)
+  ##
+  ## Asserts that 0 < `bits` <=  `sizeof(type) in bits` 
   doAssert bits > 0
   doAssert bits <= HashType.sizeof * 8
   let x = cast[HashType](1) shl (bits - 1)
   result = x xor (x - 1)
 
 proc hasher*[HashType, CharType](maxVal: HashType) : CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
+  ## Based on bitsize of required hash, will return a quasi-random (sequence
+  ## always the same since randomize is not called) range between `0..maxVal`
+  ##
   let numberOfChars = 1 shl (CharType.sizeof * 8)
   result.hashValues = newSeq[HashType](numberOfChars)
 
@@ -43,6 +49,11 @@ proc hasher*[HashType, CharType](maxVal: HashType) : CharacterHash[HashType, Cha
     raise newException(IOError, "unsupported hash value type")
 
 proc hasher*[HashType, CharType](maxVal: HashType, seedOne, seedTwo: int): CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
+  ## Based on bitsize of required hash, will return a random number
+  ## between the range of `0..maxVal`. Randomization is based upon the seeds
+  ## given, and will always yeild different results. For larger hash bitsizes
+  ## two randomizations occur to increase entropy.
+  ##
   let numberOfChars = 1 shl (CharType.sizeof * 8)
   result.hashValues = newSeq[HashType](numberOfChars)
   

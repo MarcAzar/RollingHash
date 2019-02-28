@@ -1286,6 +1286,8 @@ function main() {
 <a id="maskFnc,int"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">maskFnc</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">bits</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">HashType</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+<p>Return a mask of ones equal to <cite>bits</cite> (eg: 4 bit mask = 0b1111)</p>
+<p>Asserts that 0 &lt; <cite>bits</cite> &lt;=  <cite>sizeof(type) in bits</cite> </p>
 
 
 </dd>
@@ -1293,14 +1295,14 @@ function main() {
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">hasher</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">maxVal</span><span class="Other">:</span> <span class="Identifier">HashType</span><span class="Other">)</span><span class="Other">:</span> <a href="characterhash.html#CharacterHash"><span class="Identifier">CharacterHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
     <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-
+Based on bitsize of required hash, will return a quasi-random (sequence always the same since randomize is not called) range between <cite>0..maxVal</cite> 
 
 </dd>
 <a id="hasher,HashType,int,int"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">hasher</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">maxVal</span><span class="Other">:</span> <span class="Identifier">HashType</span><span class="Other">;</span> <span class="Identifier">seedOne</span><span class="Other">,</span> <span class="Identifier">seedTwo</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="characterhash.html#CharacterHash"><span class="Identifier">CharacterHash</span></a><span class="Other">[</span>
     <span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-
+Based on bitsize of required hash, will return a random number between the range of <cite>0..maxVal</cite>. Randomization is based upon the seeds given, and will always yeild different results. For larger hash bitsizes two randomizations occur to increase entropy. 
 
 </dd>
 
@@ -1313,7 +1315,7 @@ function main() {
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-02-27 08:29:31 UTC</small>
+        <small>Made with Nim. Generated: 2019-02-28 11:45:20 UTC</small>
       </div>
     </div>
   </div>

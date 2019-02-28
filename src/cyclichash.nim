@@ -23,6 +23,13 @@ type
     maskN: HashType
 
 proc newCyclicHash*[HashType, CharType](myN: int, myWordSize: int) : CyclicHash[HashType, CharType] {.raises: [IOError], inline.} =
+  ## Creates a new Cyclic Hash with a quasi-random[*]_ initial has value of
+  ## size `myWordSize` in bits. 
+  ## 
+  ## Asserts that the bitsize of the required hash value is not smaller than
+  ## the bitsize of `myWordSzie`
+  ##
+  ## .. [*] See Character Hash for more info
   if cmp(cast[uint](myWordSize), 8 * HashType.sizeof) > 0:
     raise newException(IOError,
                       "Can't create " & $myWordSize & " bit has values")
@@ -35,6 +42,13 @@ proc newCyclicHash*[HashType, CharType](myN: int, myWordSize: int) : CyclicHash[
   result.maskN = maskFnc[HashType](myWordSize - result.myR)
 
 proc newCyclicHash*[HashType, CharType](myN: int, seedOne, seedTwo: int, myWordSize: int) : CyclicHash {.raises:[IOError], inline.} =
+  ## Creates a new Cyclic Hash with a random[*]_ initial has value of size
+  ## `myWordSize` in bits.
+  ##
+  ## Asserts that the bitsize of the required hash value is not smaller than
+  ## the bitsize of `myWordSzie`
+  ##
+  ## .. [*] See Character Hash for more info
   if cmp(cast[uint](myWordSize), 8 * HashType.sizeof) > 0:
     raise newException(IOError,
                       "Can't create " & $myWordSize & " bit has values")
@@ -62,40 +76,60 @@ template getFastRightShiftOne[HashType, CharType](y:CyclicHash[HashType, CharTyp
   (x shr 1) or ((x and 1) shl (y.wordSize - 1))
 
 proc hash*[HashType, CharType](y: var CyclicHash[HashType, CharType], c: seq[char]): HashType {.inline.}=
+  ## Hash complete sequence of char without the need to update. This is a
+  ## helper proceedure to test whether the update proceedure below yeilds
+  ## correct results in unit testing
+  ##
   var answer: HashType = 0
   for k in 0 ..< c.len:
     y.fastLeftShiftOne(answer)
     answer = answer xor y.hasher.hashValues[ord(c[k])]
     result = answer
-
+#[
 proc hashZ*[HashType, CharType](y: var CyclicHash[HashType, CharType], outChar: CharType, n: int): HashType {.inline.}=
   var answer: HashType = y.hasher.hashValues[ord(outChar)]
   for k in 0 ..< n:
     y.fastLeftShiftOne(answer)
   result = answer
-
+]#
 proc update*[HashType, CharType](y: var CyclicHash[HashType, CharType], outChar: CharType, inChar: CharType) {.inline.}=
+  ## Updates the rolling hash after shifting left and xoring hash value of
+  ## `outChar` add `inChar`
+  ##
   var z: HashType = y.hasher.hashValues[ord(outChar)]
   y.fastLeftShiftN(z)
   y.hashValue = y.getFastLeftShiftOne(y.hashValue) xor z xor y.hasher.hashValues[ord(inChar)]
 
 proc reverseUpdate*[HashType, CharType](y: var CyclicHash[HashType, CharType], outChar: CharType, inChar: CharType) {.inline.}=
+  # Cyclic Hash is reversible! We can undo a previous update by performing a
+  # right shift. See `test_cyclichash` for an example.
+  #
   var z: HashType = y.hasher.hashValues[ord(outChar)]
   y.fastLeftShiftN(z)
   y.hashValue = y.hashValue xor z xor y.hasher.hashValues[ord(inChar)]
   y.hashValue = y.getFastRightShiftOne(y.hashValue)
 
 proc eat*[HashType, CharType](y: var CyclicHash[HashType, CharType], inChar: CharType) =
+  ## Move rolling hash forward by shifting left and xoring the hash value of
+  ## the new `inChar`
+  ##
   y.fastLeftShiftOne(y.hashValue)
   y.hashValue = y.hashValue xor y.hasher.hashValues[ord(inChar)]
 
 proc hashPrepend*[HashType, CharType](y: var CyclicHash[HashType, CharType], x: CharType): HashType {.inline.}=
+  ## Prepends a rolling hash by adding a hashed `x` into the front of the
+  ## rolling hash sequence
+  ##
   var z: HashType = y.hasher.hashValues[ord(x)]
   y.fastLeftShiftN(z)
   result = z xor y.hashValue
 
 proc hashExtend*[HashType, CharType](y: CyclicHash[HashType, CharType], x: CharType): HashType {.inline.}=
+  ## Extends a rolling hash by adding a hashed `x` into the end of the rolling
+  ## hash sequence
+  ##
   result = y.getFastLeftShiftOne(y.hashValue) xor y.hasher.hashValues[ord(x)]
 
 proc reset*(y: var CyclicHash) =
+  ## Reset the hash values of rolling hash to `0`
   y.hashValue = 0

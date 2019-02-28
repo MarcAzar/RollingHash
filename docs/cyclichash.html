@@ -1269,9 +1269,6 @@ function main() {
     title="newCyclicHash[HashType, CharType](myN: int; seedOne, seedTwo: int; myWordSize: int): CyclicHash"><wbr />new<wbr />Cyclic<wbr />Hash<span class="attachedType" style="visibility:hidden">CyclicHash</span></a></li>
   <li><a class="reference" href="#hash%2CCyclicHash%5BHashType%2CCharType%5D%2Cseq%5Bchar%5D"
     title="hash[HashType, CharType](y: var CyclicHash[HashType, CharType]; c: seq[char]): HashType"><wbr />hash<span class="attachedType" style="visibility:hidden">CyclicHash</span></a></li>
-  <li><a class="reference" href="#hashZ%2CCyclicHash%5BHashType%2CCharType%5D%2CCharType%2Cint"
-    title="hashZ[HashType, CharType](y: var CyclicHash[HashType, CharType]; outChar: CharType;
-                         n: int): HashType"><wbr />hash<wbr />Z<span class="attachedType" style="visibility:hidden">CyclicHash</span></a></li>
   <li><a class="reference" href="#update%2CCyclicHash%5BHashType%2CCharType%5D%2CCharType%2CCharType"
     title="update[HashType, CharType](y: var CyclicHash[HashType, CharType]; outChar: CharType;
                           inChar: CharType)"><wbr />update<span class="attachedType" style="visibility:hidden">CyclicHash</span></a></li>
@@ -1329,6 +1326,8 @@ function main() {
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">newCyclicHash</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">myN</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">myWordSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span>
     <span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+<p>Creates a new Cyclic Hash with a quasi-random[*]_ initial has value of size <cite>myWordSize</cite> in bits.</p>
+<p>Asserts that the bitsize of the required hash value is not smaller than the bitsize of <cite>myWordSzie</cite></p>
 
 
 </dd>
@@ -1336,6 +1335,8 @@ function main() {
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">newCyclicHash</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">myN</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">seedOne</span><span class="Other">,</span> <span class="Identifier">seedTwo</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">myWordSize</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
     <span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
+<p>Creates a new Cyclic Hash with a random[*]_ initial has value of size <cite>myWordSize</cite> in bits.</p>
+<p>Asserts that the bitsize of the required hash value is not smaller than the bitsize of <cite>myWordSzie</cite></p>
 
 
 </dd>
@@ -1343,21 +1344,14 @@ function main() {
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">hash</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">c</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">char</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">HashType</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
     <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-
-
-</dd>
-<a id="hashZ,CyclicHash[HashType,CharType],CharType,int"></a>
-<dt><pre><span class="Keyword">proc</span> <span class="Identifier">hashZ</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">;</span>
-                             <span class="Identifier">outChar</span><span class="Other">:</span> <span class="Identifier">CharType</span><span class="Other">;</span> <span class="Identifier">n</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">HashType</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
-<dd>
-
+Hash complete sequence of char without the need to update. This is a helper proceedure to test whether the update proceedure below yeilds correct results in unit testing 
 
 </dd>
 <a id="update,CyclicHash[HashType,CharType],CharType,CharType"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">update</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">;</span>
                               <span class="Identifier">outChar</span><span class="Other">:</span> <span class="Identifier">CharType</span><span class="Other">;</span> <span class="Identifier">inChar</span><span class="Other">:</span> <span class="Identifier">CharType</span><span class="Other">)</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-
+Updates the rolling hash after shifting left and xoring hash value of <cite>outChar</cite> add <cite>inChar</cite> 
 
 </dd>
 <a id="reverseUpdate,CyclicHash[HashType,CharType],CharType,CharType"></a>
@@ -1370,27 +1364,27 @@ function main() {
 <a id="eat,CyclicHash[HashType,CharType],CharType"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">eat</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">inChar</span><span class="Other">:</span> <span class="Identifier">CharType</span><span class="Other">)</span></pre></dt>
 <dd>
-
+Move rolling hash forward by shifting left and xoring the hash value of the new <cite>inChar</cite> 
 
 </dd>
 <a id="hashPrepend,CyclicHash[HashType,CharType],CharType"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">hashPrepend</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">;</span>
                                    <span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">CharType</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">HashType</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma"><span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-
+Prepends a rolling hash by adding a hashed <cite>x</cite> into the front of the rolling hash sequence 
 
 </dd>
 <a id="hashExtend,CyclicHash[HashType,CharType],CharType"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">hashExtend</span><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">[</span><span class="Identifier">HashType</span><span class="Other">,</span> <span class="Identifier">CharType</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">CharType</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">HashType</span> <span><span class="Other">{</span><span class="Other pragmadots">...</span><span class="Other">}</span></span><span class="pragmawrap"><span class="Other">{.</span><span class="pragma">
     <span class="Identifier">inline</span></span><span class="Other">.}</span></span></pre></dt>
 <dd>
-
+Extends a rolling hash by adding a hashed <cite>x</cite> into the end of the rolling hash sequence 
 
 </dd>
 <a id="reset,CyclicHash"></a>
 <dt><pre><span class="Keyword">proc</span> <span class="Identifier">reset</span><span class="Other">(</span><span class="Identifier">y</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="cyclichash.html#CyclicHash"><span class="Identifier">CyclicHash</span></a><span class="Other">)</span></pre></dt>
 <dd>
-
+Reset the hash values of rolling hash to <cite>0</cite>
 
 </dd>
 
@@ -1403,7 +1397,7 @@ function main() {
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small>Made with Nim. Generated: 2019-02-27 11:39:26 UTC</small>
+        <small>Made with Nim. Generated: 2019-02-28 11:45:12 UTC</small>
       </div>
     </div>
   </div>
