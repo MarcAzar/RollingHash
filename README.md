@@ -33,7 +33,7 @@ Install <a class="external reference" href="https://nim-lang.org/install.html">N
 Once ```choosenim``` is installed you can ```nimble install cyclic-polynomial-hash``` to pull the latest bipbuffer release and all its dependencies
 
 ## Documentation
-Refer to the following documentation for a list of procedures and templates: <a class="reference" href="docs/cyclichash.html">Cyclic Hash</a> and <a class="reference" href="docs/characterhash.html">Character Hash</a>
+Refer to the following documentation for a list of procedures and templates: <a class="reference" href="https://marcazar.github.io/Cyclic-Polynomial-hash/docs/cyclichash.html">Cyclic Hash</a> and <a class="external reference" href="https://marcazar.github.io/Cyclic-Polynomial-hash/docs/characterhash.html">Character Hash</a>
 
 ## Credits
 Special thanks for Dr. Daniel Lemire for his help and for replying to my inquires concerning his implementation of cyclic hash in c++ found <a class="reference external" href="https://github.com/lemire/rollinghashcpp">here</a> along with other handy rolling hash functions! 
