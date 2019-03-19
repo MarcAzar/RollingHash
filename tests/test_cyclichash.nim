@@ -73,7 +73,7 @@ proc isRandom =
   for i in 0 ..< 100:
     var hf = newCyclicHash[Natural, char](n, L)
     var y: uint64 = hf.hash(data)
-  
+    
     doAssert y != x
 
 when isMainModule:

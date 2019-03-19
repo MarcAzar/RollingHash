@@ -13,7 +13,7 @@
 import characterhash
 
 type
-  CyclicHash*[HashType = Natural, CharType = char] = object
+  CyclicHash*[HashType: Natural, CharType: char] = object
     hashValue*: HashType
     n: int
     wordSize: int
@@ -32,7 +32,7 @@ proc newCyclicHash*[HashType, CharType](myN: int, myWordSize: int) : CyclicHash[
   ## .. [*] See Character Hash for more info
   if cmp(cast[uint](myWordSize), 8 * HashType.sizeof) > 0:
     raise newException(IOError,
-                      "Can't create " & $myWordSize & " bit has values")
+                      "Can't create " & $myWordSize & " bit hash values")
   result.hashValue = 0
   result.n = myN
   result.wordSize = myWordSize
@@ -41,7 +41,7 @@ proc newCyclicHash*[HashType, CharType](myN: int, myWordSize: int) : CyclicHash[
   result.myR = myN mod myWordSize
   result.maskN = maskFnc[HashType](myWordSize - result.myR)
 
-proc newCyclicHash*[HashType, CharType](myN: int, seedOne, seedTwo: int, myWordSize: int) : CyclicHash {.raises:[IOError], inline.} =
+proc newCyclicHash*[HashType, CharType](myN: int, seedOne, seedTwo: int, myWordSize: int) : CyclicHash[HashType, CharType] {.raises:[IOError], inline.} =
   ## Creates a new Cyclic Hash with a random[*]_ initial has value of size
   ## `myWordSize` in bits.
   ##
@@ -51,14 +51,14 @@ proc newCyclicHash*[HashType, CharType](myN: int, seedOne, seedTwo: int, myWordS
   ## .. [*] See Character Hash for more info
   if cmp(cast[uint](myWordSize), 8 * HashType.sizeof) > 0:
     raise newException(IOError,
-                      "Can't create " & $myWordSize & " bit has values")
+                      "Can't create " & $myWordSize & " bit hash values")
   result.hashValue = 0
   result.n = myN
   result.wordSize = myWordSize
-  result.hasher = hasher[HashType, CharType](maskFnc(myWordSize), seedOne, seedTwo)
-  result.maskOne = maskFnc(myWordSize - 1)
+  result.hasher = hasher[HashType, CharType](maskFnc[HashType](myWordSize), seedOne, seedTwo)
+  result.maskOne = maskFnc[HashType](myWordSize - 1)
   result.myR = myN mod myWordSize
-  result.maskN = maskFnc(myWordSize - result.myR)
+  result.maskN = maskFnc[HashType](myWordSize - result.myR)
 
 template fastLeftShiftN[HashType, CharType](y: CyclicHash[HashType, CharType], x: var HashType) =
   x = ((x and y.maskN) shl y.myR) or (x shr (y.wordSize - y.myR))

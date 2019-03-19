@@ -11,7 +11,7 @@
 import random
 
 type
-  CharacterHash*[HashType = Natural, CharType = char] = object
+  CharacterHash*[HashType: Natural, CharType: char] = object
     hashValues*: seq[HashType]
 
 proc maskFnc*[HashType](bits: int): HashType {.inline.} =
@@ -35,15 +35,10 @@ proc hasher*[HashType, CharType](maxVal: HashType) : CharacterHash[HashType, Cha
       result.hashValues[k] = cast[HashType](rand(maxVal))
 
   elif HashType.sizeof == 8:
-    let mx = maxVal shr 32
-    var mx2: HashType = 0
-    if mx == 0:
-      mx2 = maxVal
-    else:
-      mx2 = high(int)
-    
+    let maxOne = maxVal shr 32
+    let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(HashType)
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(mx2)) or (cast[HashType](rand(mx)) shl 32)
+      result.hashValues[k] = cast[HashType](rand(maxTwo)) or (cast[HashType](rand(maxOne)) shl 32)
   
   else:
     raise newException(IOError, "unsupported hash value type")
@@ -51,30 +46,23 @@ proc hasher*[HashType, CharType](maxVal: HashType) : CharacterHash[HashType, Cha
 proc hasher*[HashType, CharType](maxVal: HashType, seedOne, seedTwo: int): CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
   ## Based on bitsize of required hash, will return a random number
   ## between the range of `0..maxVal`. Randomization is based upon the seeds
-  ## given, and will always yeild different results. For larger hash bitsizes
-  ## two randomizations occur to increase entropy.
+  ## given.
   ##
   let numberOfChars = 1 shl (CharType.sizeof * 8)
   result.hashValues = newSeq[HashType](numberOfChars)
   
   if HashType.sizeof <= 4:
+    var randomGenerator = initRand(seedOne)
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(maxVal))
-    var r = initRand(seedOne)
+      result.hashValues[k] = cast[HashType](rand(randomGenerator, maxVal))
 
   elif HashType.sizeof == 8:
-    let mx = maxVal shr 32
-    var mx2: HashType = 0
-    if mx == 0:
-      mx2 = maxVal
-    else:
-      mx2 = high(int)
-    
+    var randomGenerator = initRand(seedOne)
+    var randomGeneratorBase = initRand(seedTwo)
+    let maxOne = maxVal shr 32
+    let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(HashType)
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(mx2)) or (cast[HashType](rand(mx)) shl 32)
-    
-    var rBase = initRand(seedOne)
-    rBase = initRand(seedTwo)
+      result.hashValues[k] = cast[HashType](rand(randomGeneratorBase, maxTwo)) or (cast[HashType](rand(randomGenerator, maxOne)) shl 32)
     
   else:
-    raise newException(IOError, "unsupported hash value tiype")
+    raise newException(IOError, "unsupported hash value type")
