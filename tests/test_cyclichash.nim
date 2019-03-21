@@ -3,7 +3,7 @@ import cyclichash, sequtils, random
 proc extendAndPrepend =
   let n = 4
   let L = 19
-  var hf = newCyclicHash[Natural, char](n, L)
+  var hf = newCyclicHash(n, L)
   let input = toSeq("XABCDY".items)
   let base = input[1 ..^ 2]
   doAssert base.len == n
@@ -19,7 +19,7 @@ proc extendAndPrepend =
 proc aFunc =
   let L = 7
   let n = 3
-  var hf = newCyclicHash[Natural, char](n, L)
+  var hf = newCyclicHash(n, L)
   
   var s = newSeq[char]()
   var c: char
@@ -41,7 +41,7 @@ proc aFunc =
 proc reverseUpdate =
   let L = 7
   let n = 3
-  var hf = newCyclicHash[Natural, char](n, L)
+  var hf = newCyclicHash(n, L)
   var s = newSeq[char]()
   var c: char
   for i in 0 ..< n:
@@ -68,11 +68,11 @@ proc isRandom =
   for i in 0 ..< n:
     data.add(chr(i))
 
-  var base = newCyclicHash[Natural, char](n, L)
-  var x: uint64 = base.hash(data)
+  var base = newCyclicHash(n, L)
+  var x = base.hash(data)
   for i in 0 ..< 100:
-    var hf = newCyclicHash[Natural, char](n, L)
-    var y: uint64 = hf.hash(data)
+    var hf = newCyclicHash(n, L)
+    var y = hf.hash(data)
     
     doAssert y != x
 

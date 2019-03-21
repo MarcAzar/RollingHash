@@ -8,13 +8,14 @@
 ##
 ## .. _library:http://xoroshiro.di.unimi.it/
 ##
-import random
+from random import rand, initRand
 
 type
-  CharacterHash*[HashType: Natural, CharType: char] = object
-    hashValues*: seq[HashType]
+  HashType* = int
+  CharType* = char
+  Hashes* = seq[HashType]
 
-proc maskFnc*[HashType](bits: int): HashType {.inline.} =
+proc maskFnc*(bits: int): HashType {.inline.} =
   ## Return a mask of ones equal to `bits` (eg: 4 bit mask = 0b1111)
   ##
   ## Asserts that 0 < `bits` <=  `sizeof(type) in bits` 
@@ -23,38 +24,41 @@ proc maskFnc*[HashType](bits: int): HashType {.inline.} =
   let x = cast[HashType](1) shl (bits - 1)
   result = x xor (x - 1)
 
-proc hasher*[HashType, CharType](maxVal: HashType) : CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
+proc hasher*(maxVal: HashType): Hashes {.raises: [IOError], inline.} =
   ## Based on bitsize of required hash, will return a quasi-random (sequence
   ## always the same since randomize is not called) range between `0..maxVal`
   ##
   let numberOfChars = 1 shl (CharType.sizeof * 8)
-  result.hashValues = newSeq[HashType](numberOfChars)
+  result = newSeqOfCap[HashType](numberOfChars)
+  result.setlen(numberOfChars)
 
   if  HashType.sizeof <= 4:
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(maxVal))
+      result[k] = cast[HashType](rand(maxVal))
 
   elif HashType.sizeof == 8:
     let maxOne = maxVal shr 32
     let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(HashType)
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(maxTwo)) or (cast[HashType](rand(maxOne)) shl 32)
+      result[k] = cast[HashType](rand(maxTwo)) or
+        (cast[HashType](rand(maxOne)) shl 32)
   
   else:
     raise newException(IOError, "unsupported hash value type")
 
-proc hasher*[HashType, CharType](maxVal: HashType, seedOne, seedTwo: int): CharacterHash[HashType, CharType] {.raises: [IOError], inline.} =
+proc hasher*(maxVal: HashType, seedOne, seedTwo: int): Hashes {.raises: [IOError], inline.} =
   ## Based on bitsize of required hash, will return a random number
   ## between the range of `0..maxVal`. Randomization is based upon the seeds
   ## given.
   ##
   let numberOfChars = 1 shl (CharType.sizeof * 8)
-  result.hashValues = newSeq[HashType](numberOfChars)
+  result = newSeqOfCap[HashType](numberOfChars)
+  result.setlen(numberOfChars)
   
   if HashType.sizeof <= 4:
     var randomGenerator = initRand(seedOne)
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(randomGenerator, maxVal))
+      result[k] = cast[HashType](rand(randomGenerator, maxVal))
 
   elif HashType.sizeof == 8:
     var randomGenerator = initRand(seedOne)
@@ -62,7 +66,8 @@ proc hasher*[HashType, CharType](maxVal: HashType, seedOne, seedTwo: int): Chara
     let maxOne = maxVal shr 32
     let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(HashType)
     for k in 0 ..< numberOfChars:
-      result.hashValues[k] = cast[HashType](rand(randomGeneratorBase, maxTwo)) or (cast[HashType](rand(randomGenerator, maxOne)) shl 32)
+      result[k] = cast[HashType](rand(randomGeneratorBase, maxTwo)) or
+        (cast[HashType](rand(randomGenerator, maxOne)) shl 32)
     
   else:
     raise newException(IOError, "unsupported hash value type")
