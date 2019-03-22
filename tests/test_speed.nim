@@ -1,8 +1,12 @@
 import cyclichash, os, times
 
+type
+  H = int
+  C = char
+
 proc hashALot(n: int, L: int, ttimes: Natural, sizeOfTest: Natural, recorder: var seq[Natural]) =
   for t in 0 ..< ttimes:
-    var hf = newCyclicHash(n, L)
+    var hf = newCyclicHash[H, C](n, L)
     for k in 0 ..< n:
       hf.eat(char(k))
     for k in n ..< sizeOfTest:

@@ -1,25 +1,28 @@
 import cyclichash, sequtils, random
 
+type
+  H = int64
+  C = char
+
 proc extendAndPrepend =
   let n = 4
   let L = 19
-  var hf = newCyclicHash(n, L)
+  var hf = newCyclicHash[H, C](n, L)
   let input = toSeq("XABCDY".items)
   let base = input[1 ..^ 2]
   doAssert base.len == n
   let extend = input[1 ..< input.len]
   let prepend = input[0 ..^ 2]
-
   for i in 0 ..< base.len:
     hf.eat(base[i])
-  doAssert hf.hashValue == hf.hash(base)
-  doAssert hf.hash_prepend(input[0]) == hf.hash(prepend)
-  doAssert hf.hash_extend(input[input.len - 1]) == hf.hash(extend)
+  doAssert hf.hashValue == hf.trueHash(base)
+  doAssert hf.hashPrepend(input[0]) == hf.trueHash(prepend)
+  doAssert hf.hashExtend(input[input.len - 1]) == hf.trueHash(extend)
 
 proc aFunc =
   let L = 7
   let n = 3
-  var hf = newCyclicHash(n, L)
+  var hf = newCyclicHash[H, C](n, L)
   
   var s = newSeq[char]()
   var c: char
@@ -36,12 +39,12 @@ proc aFunc =
     s.add(c)
     hf.update(o, c)
 
-    doAssert hf.hash(s) == hf.hashValue
+    doAssert hf.trueHash(s) == hf.hashValue
 
 proc reverseUpdate =
   let L = 7
   let n = 3
-  var hf = newCyclicHash(n, L)
+  var hf = newCyclicHash[H, C](n, L)
   var s = newSeq[char]()
   var c: char
   for i in 0 ..< n:
@@ -59,7 +62,7 @@ proc reverseUpdate =
     hf.reverseUpdate(o, c)
     hf.update(o, c)
 
-    doAssert hf.hash(s) == hf.hashValue
+    doAssert hf.trueHash(s) == hf.hashValue
 
 proc isRandom =
   let n = 5
@@ -68,11 +71,11 @@ proc isRandom =
   for i in 0 ..< n:
     data.add(chr(i))
 
-  var base = newCyclicHash(n, L)
-  var x = base.hash(data)
+  var base = newCyclicHash[H, C](n, L)
+  var x = base.trueHash(data)
   for i in 0 ..< 100:
-    var hf = newCyclicHash(n, L)
-    var y = hf.hash(data)
+    var hf = newCyclicHash[H, C](n, L)
+    var y = hf.trueHash(data)
     
     doAssert y != x
 
