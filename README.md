@@ -1,4 +1,4 @@
-# Cyclic-Polynomial-Hash
+# Rolling Hash
 A Nim implementation of a Cyclic Polynomial Hash, aka BuzHash. A Cyclic Polynomial hash is a type of Rolling hash which avoids
 multiplication by using circular shifts and xoring. This implementation has type support for (uint8, uint16, uint32, and uint64). For more information regarding Cyclic Polynomial hashing please refer to wiki's article on <a class="external reference" href="https://en.wikipedia.org/wiki/Rolling_hash#Cyclic_polynomial">Rolling Hash</a>. Also In this implementation is <a class="external reference" href="https://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm">Rabin Karp hasing algorithm</a>, which can be used for variable content based chunking.
 
