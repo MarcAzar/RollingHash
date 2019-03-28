@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.3.0"
+version       = "0.3.1"
 author        = "Marc Azar"
 description   = "A Nim implementation of a Cyclic Polynomial Hash, aka BuzHash"
 license       = "MIT"
