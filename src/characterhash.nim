@@ -11,7 +11,7 @@
 import random
 
 type
-  Units* = int | uint8 | uint16 | uint32 | int64
+  Units* = uint8 | uint16 | uint32 | uint64
   CharacterHash*[H: Units, C: char] = object
     hashValues*: seq[H]
 
@@ -21,7 +21,7 @@ proc maskFnc*[H](bits: int): H {.inline.} =
   ## Asserts that 0 < `bits` <=  `sizeof(type) in bits` 
   doAssert bits > 0
   doAssert bits <= H.sizeof * 8
-  let x = cast[H](1) shl (bits - 1)
+  let x: H = cast[H](1) shl (bits - 1)
   result = x xor (x - 1)
 
 proc hash*[H, C](maxVal: H): CharacterHash[H, C] {.raises: [IOError], inline.} =
@@ -37,7 +37,7 @@ proc hash*[H, C](maxVal: H): CharacterHash[H, C] {.raises: [IOError], inline.} =
       result.hashValues[k] = cast[H](rand(maxVal.int))
 
   elif H.sizeof == 8:
-    let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(H)
+    let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(uint32).H
     for k in 0 ..< numberOfChars:
       result.hashValues[k] = cast[H](rand(maxTwo.int)) or 
         cast[H](rand(maxVal.int shr 32) shl 32)
@@ -60,7 +60,7 @@ proc hash*[H, C](maxVal: H, seedOne, seedTwo: int): CharacterHash[H, C] {.raises
       result.hashValues[k] = cast[H](rand(randGen, maxVal.int))
 
   elif H.sizeof == 8:
-    let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(H)
+    let maxTwo = if (maxVal shr 32) == 0: maxVal else: high(uint32).H
     var randGen = initRand(seedOne)
     var randBase = initRand(seedTwo)
     for k in 0 ..< numberOfChars:

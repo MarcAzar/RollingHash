@@ -92,7 +92,7 @@ proc update*[H, C](y: var CyclicHash[H, C], outChar, inChar: char) {.inline.}=
   ## Updates the rolling hash after shifting left and xoring hash value of
   ## `outChar` add `inChar`
   ##
-  var z = y.hasher.hashValues[cast[int](outChar)]
+  var z: H = y.hasher.hashValues[cast[int](outChar)]
   y.fastLeftShiftN(z)
   y.hashValue = y.getFastLeftShiftOne(y.hashValue) xor z xor 
     y.hasher.hashValues[cast[int](inChar)]
@@ -101,7 +101,7 @@ proc reverseUpdate*[H, C](y: var CyclicHash[H, C], outChar, inChar: char) {.inli
   # Cyclic Hash is reversible! We can undo a previous update by performing a
   # right shift. See `test_cyclichash` for an example.
   #
-  var z = y.hasher.hashValues[cast[int](outChar)]
+  var z: H = y.hasher.hashValues[cast[int](outChar)]
   y.fastLeftShiftN(z)
   y.hashValue = y.hashValue xor z xor y.hasher.hashValues[cast[int](inChar)]
   y.hashValue = y.getFastRightShiftOne(y.hashValue)
@@ -117,7 +117,7 @@ proc hashPrepend*[H, C](y: var CyclicHash[H, C], x: char): H {.inline.}=
   ## Prepends a rolling hash by adding a hashed `x` into the front of the
   ## rolling hash sequence
   ##
-  var z = y.hasher.hashValues[cast[int](x)]
+  var z: H = y.hasher.hashValues[cast[int](x)]
   y.fastLeftShiftN(z)
   result = z xor y.hashValue
 
