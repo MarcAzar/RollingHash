@@ -33,7 +33,7 @@ proc newRabinKarpHash*[H, C](myN: int, myWordSize: int) : RabinKarpHash[H, C] {.
     hasher: hash[H, C](maskFnc[H](myWordSize)),
     hashMask: maskFnc[H](myWordSize),
     primeToN: 1,
-    prime: 67
+    prime: 37
   )
   for i in 0 ..< myN:
     result.primeToN = result.primeToN * result.prime
