@@ -1,9 +1,8 @@
-## Copyright (C) Marc Azar. All rights reserved.
+# Copyright (C) Marc Azar. All rights reserved.
 # MIT License. Look at LICNESE.txt for more info
 #
 ## A high performance Nim implementation of Rabin Karp algorithm. Can be used
 ## for content defined variable chunking.
-##
 ##
 import characterhash
 
