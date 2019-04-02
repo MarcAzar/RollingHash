@@ -1,6 +1,6 @@
 import cyclichash, sequtils
 
-var hf = newCyclicHash[Natural, char](5, 19)
+var hf = newCyclicHash[uint64, char](5, 19)
 let input = "ABCDE"
 
 hf.eat(input[0])
