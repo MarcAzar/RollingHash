@@ -5,7 +5,7 @@ A high performance nim implementation of a Cyclic Polynomial Hash, aka BuzHash, 
 ```
 import cyclichash, sequtils                                                   
 
-var hf = newCyclicHash[Natural, char](5, 19) # Create a Cyclic with a 5 n-gram sliding window and 19 bit sized hash values
+var hf = newCyclicHash[uint64, char](5, 19) # Create a Cyclic with a 5 n-gram sliding window and 19 bit sized hash values
 let input = "ABCDE"
   
 hf.eat(input[0]) # A
